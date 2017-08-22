@@ -1,2 +1,9 @@
 ---
 # defaults file for satellite6-install
+
+###  Registration Variables
+rhn_user: ''
+rhn_password: ''
+rhn_product: 'Satellite'
+# Optionall specify the pool id instead of pulling a dynamic pool list
+rhn_pool_id: '' # Optionally define a st
