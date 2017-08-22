@@ -1,8 +1,8 @@
 ---
-- name: SATELLITE | registration | Clear out existing repos
+- name: SATELLITE | install_software | Clear out existing repos
   command: subscription-manager repos --disable "*"
 
-- name: Configure repository subscriptions
+- name: SATELLITE | install_software | Configure repository subscriptions
   redhat_repos:
     repos: "{{ satellite_repositories }}"
     state: present
@@ -10,7 +10,12 @@
 - name: SATELLITE | registration | Clean out any residual metadata from old repositories
   command: yum clean all
 
-- name: SATELLITE | registration | Update currently installed  packages
+- name: SATELLITE | install_software | Update currently installed  packages
   yum:
     name: "*"
+    state: latest
+
+- name: SATELLITE | install_software | Install Satellite and Additional Packages
+  yum:
+    name: "{{ packages_list }}"
     state: latest
