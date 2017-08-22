@@ -3,7 +3,7 @@ NOTE: This is currently a development version; not all functions will be in a wo
 Ansible Satellite6-installer Role
 =========
 
-This role is to install and provide basic configuration of Red Hat Satellite 6.2+ on a RHEL 7+ machine. 
+This role is to install and provide basic configuration of Red Hat Satellite 6.2+ on a RHEL 7+ machine.
 
 Requirements
 ------------
@@ -21,8 +21,8 @@ for the playbook to work properly. Follow the below steps.
 - Select "Register a Satellite"
 - Enter a name, the version of Satellite, and click Register
 - Select "Attach Subscription" and choose which subscription to attach
-- Select "Download Manifest" 
-- Move manifest file into [role_name]/files/satellite_manifest.zip 
+- Select "Download Manifest"
+- Move manifest file into [role_name]/files/satellite_manifest.zip
 
 
 Variables
@@ -31,7 +31,7 @@ All variables can be found under vars/main.yml
 
 Dependencies
 ------------
-No dependencies for this role. 
+No dependencies for this role.
 
 Running the playbook
 ----------------
@@ -48,7 +48,7 @@ Example: [ansible_directory]/playbook.yml
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
