@@ -10,7 +10,8 @@
 #  - install_satellite
 
 - name: Load Satellite answer file varriables
-  include_vars: file=../vars/answer-file.yml
+  include_vars:
+    file: ../vars/answer-file.yml
 
 - name: install_satellite | Verify Foreman exists
   stat:
@@ -28,8 +29,12 @@
     - install_satellite
 
 - name: Update target Satellite answers file
-  replace: dest=/etc/foreman-installer/scenarios.d/satellite-answers.yaml regexp={{ item.regex }} replace={{ item.setting }}
-  with_items: "{{ answer_file_settings }}"
+  replace:
+    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
+    regexp: {{ item.regex }}
+    replace: {{ item.setting }}
+  with_items:
+    - "{{ answer_file_settings }}"
   when: foreman_location.stat.exists
   tags:
     - install_satellite
