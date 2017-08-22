@@ -1,27 +1,60 @@
 ---
-- name: SATELLITE | registration | Get Satellite pool ID
-  shell: /usr/bin/subscription-manager list --all --available --matches="*Satellite*" | awk '/Pool ID/ {print $3}' | head -1
-  tags:
-    - rhn
+# tasks file for registration.yml
+- name: SATELLITE | registration | Register the machine with RHN
+  redhat_subscription:
+    username: "{{ rhn_user }}"
+    password: "{{ rhn_password }}"
+    autosubscribe: false
+  register: subscription_result
+  until: subscription_result | succeeded
+  retries: 10
+  delay: 5
+
+- name: SATELLITE | registration | Find an available Pool ID for defined product
+  command: /usr/bin/subscription-manager list --all --available --matches="*{{ rhn_product }}*" --pool-only | head -1
   register: pool_id
-  ignore_errors: yes
+  changed_when: false
+  failed_when: false
 
-- name: SATELLITE | registration | Attach machine with Satellite pool ID
-  command: /usr/bin/subscription-manager attach --pool={{ pool_id.stdout }}
-  tags:
-    - rhn
-  ignore_errors: yes
+- name: SATELLITE | registration | Check if rhn_pool_id is statically defined
+  set_fact:
+    rhn_static_pool_id: true
+  when:
+    - rhn_pool_id is defined
+    - rhn_pool_id != ""
 
-- name: SATELLITE | registration | Clear out existing repos
-  command: subscription-manager repos --disable "*"
+- name: SATELLITE | registration | Set the Pool ID if not statically defined
+  set_fact:
+    rhn_pool_id: "{{ pool_id.stdout }}"
+  when:
+    - rhn_static_pool_id is undefined
 
-- name: SATELLITE | registration | Enable the correct repos for Satellite
-  command: subscription-manager repos  --enable rhel-7-server-satellite-{{satellite_version}}-rpms --enable rhel-7-server-rpms --enable rhel-server-rhscl-7-rpms
+- name: SATELLITE | registration | Determining if a pool is already consumed for defined product
+  command: /usr/bin/subscription-manager list --consumed --matches="*{{ rhn_product }}*" --pool-only
+  register: pool_id_attached
+  changed_when: false
+  failed_when: false
 
-- name: SATELLITE | registration | Clean out any residual metadata from old repositories
-  command: yum clean all
+- name: SATELLITE | registration | List of Consumed Pool IDs
+  debug:
+    msg: "The following pools are already being consumed: {{ pool_id_attached.stdout_lines }}"
+  when: pool_id_attached.stdout != ''
 
-- name: SATELLITE | registration | Update currently installed  packages
-  yum:
-    name: "*"
-    state: latest
+- name: SATELLITE | registration | If no pools are consumed or available, fail the playbook
+  fail:
+    msg: "Either Pool ID was not defined or a new one could not be located"
+  when:
+    - static_pool_id is undefined
+    - pool_id.stdout == ''
+    - pool_id_attached.stdout_lines == ''
+
+- name: SATELLITE | registration | Attach machine with RHN Pool ID
+  command: /usr/bin/subscription-manager attach --pool={{ rhn_pool_id }}
+  ignore_errors: no
+  register: attach_result
+  until: attach_result | succeeded
+  retries: 10
+  delay: 1
+  failed_when: false
+  when:
+    - (pool_id.stdout != '' and pool_id_attached == '') or (rhn_static_pool_id is defined and rhn_pool_id not in pool_id_attached.stdout_lines)
