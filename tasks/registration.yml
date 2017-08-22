@@ -1,0 +1,27 @@
+---
+- name: SATELLITE | registration | Get Satellite pool ID
+  shell: /usr/bin/subscription-manager list --all --available --matches="*Satellite*" | awk '/Pool ID/ {print $3}' | head -1
+  tags:
+    - rhn
+  register: pool_id
+  ignore_errors: yes
+
+- name: SATELLITE | registration | Attach machine with Satellite pool ID
+  command: /usr/bin/subscription-manager attach --pool={{ pool_id.stdout }}
+  tags:
+    - rhn
+  ignore_errors: yes
+
+- name: SATELLITE | registration | Clear out existing repos
+  command: subscription-manager repos --disable "*"
+
+- name: SATELLITE | registration | Enable the correct repos for Satellite
+  command: subscription-manager repos  --enable rhel-7-server-satellite-{{satellite_version}}-rpms --enable rhel-7-server-rpms --enable rhel-server-rhscl-7-rpms
+
+- name: SATELLITE | registration | Clean out any residual metadata from old repositories
+  command: yum clean all
+
+- name: SATELLITE | registration | Update currently installed  packages
+  yum:
+    name: "*"
+    state: latest
