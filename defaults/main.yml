@@ -1,18 +1,23 @@
 ---
 # defaults file for satellite6-install
 
+############################
+##### PLAYBOOK TOGGLES #####
+############################
+rhn_registration: true
+rhsub_rhsm_configure: true
+satellite_format_volumes: true
+
 ########################################
 ##### RED HAT NETWORK REGISTRATION #####
 ########################################
 
 # Registration enabled by default. Change to false if you've already attached a subscription to your machine.
-rhn_registration: true
 rhn_user: ''
 rhn_password: ''
 rhn_product: 'Satellite'
 # Optionally specify the pool id instead of pulling a dynamic pool list
 rhn_pool_id: ''
-
 
 ##########################
 ##### MISC VARIABLES #####
@@ -20,12 +25,9 @@ rhn_pool_id: ''
 
 # Desired Satellite version
 satellite_version: 6.2
-
 # Default Satellite Scenario
 satellite_scenario: satellite
-
-# Volume formatting assumes one data partition assigned. Those values can be adjusted below. 
-satellite_format_volumes: true
+# Volume formatting assumes one data partition assigned. Those values can be adjusted below.
 satellite_data_physvol: /dev/xvdc
 satellite_data_physlvm: /dev/xvdc1
 satellite_volgrp: vg_data
@@ -35,7 +37,6 @@ satellite_volumes:
   - { lvname: "lv_pulp_cache", lvsize: "10G", mtpoint: "/var/cache/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp_cache" }
   - { lvname: "lv_qpidd", lvsize: "4G", mtpoint: "/var/lib/qpidd", lvpath: "/dev/mapper/vg_data-lv_qpidd" }
   - { lvname: "lv_pgsql", lvsize: "20G", mtpoint: "/var/lib/pgsql", lvpath: "/dev/mapper/vg_data-lv_pgsql" }
-
 
 ######################
 ##### FIREWALL   #####
@@ -114,3 +115,14 @@ repositories:
   - { product_name: 'Red Hat OpenStack', name_repo: 'Red Hat OpenStack Platform 8 Operational Tools for RHEL 7 (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
   - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Satellite Tools {{ satellite_version }} (for RHEL 7 Server) (RPMs)', architecture: 'x86_64', state: enable}
   - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server - Extras (RPMs)', architecture: 'x86_64', state: enable}
+
+  #########################
+  ##### RHSM Settings #####
+  #########################
+
+  # /etc/rhsm/rhsm.conf settings
+  rhsub_rhsm_port: 443
+  # rhsub_rhsm_proxy_hostname: ""
+  # rhsub_rhsm_proxy_port: ""
+  # rhsub_rhsm_proxy_user: ""
+  # rhsub_rhsm_proxy_password: ""
