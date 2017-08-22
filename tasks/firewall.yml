@@ -6,7 +6,7 @@
   tags:
     - firewalld
 
-- name: SATELLITE | Enable and Start Firewalld
+- name: SATELLITE | firewall | Enable and Start Firewalld
   service:
     name: firewalld
     enabled: yes
