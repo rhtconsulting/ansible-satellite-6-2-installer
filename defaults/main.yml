@@ -1,4 +1,3 @@
----
 # defaults file for satellite6-install
 
 ########################################
@@ -70,12 +69,6 @@ firewall_ports:
  ##################################
  ##### REPOSITORY AND PACKAGE #####
  ##################################
-
- # Repositories to be enabled on the Satellite server for package installs
- satellite_repositories:
-   - rhel-7-server-satellite-{{satellite_version}}-rpms
-   - rhel-7-server-rpms
-   - rhel-server-rhscl-7-rpms
 
 # Packages to be installed via YUM. Add another line for any additional
 # software to install.
