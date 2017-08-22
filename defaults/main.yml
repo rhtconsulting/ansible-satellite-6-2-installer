@@ -1,2 +1,103 @@
 ---
 # defaults file for satellite6-install
+
+########################################
+##### RED HAT NETWORK REGISTRATION #####
+########################################
+
+# Registration enabled by default. Change to false if you've already attached a subscription to your machine.
+rhn_registration: true
+rhn_user: ''
+rhn_password: ''
+rhn_product: 'Satellite'
+# Optionally specify the pool id instead of pulling a dynamic pool list
+rhn_pool_id: ''
+
+
+##########################
+##### MISC VARIABLES #####
+##########################
+
+# Desired Satellite version
+satellite_version: 6.2
+
+# Default Satellite Scenario
+satellite_scenario: satellite
+
+######################
+##### FIREWALL   #####
+######################
+
+# List of service to add into the firewall via Firewalld
+firewall_services:
+  - ssh
+  - RH-Satellite-6
+# - dns
+# - dhcp
+# - dhcpv6
+# - tftp
+# - libvirt-tls
+# - ldap
+# - ldaps
+# - docker-registry
+# - vnc-server
+
+# List of ports to add into the firewall via Firewalld
+# See README.md for an explanation.
+firewall_ports:
+# - 22/tcp
+# - 53/udp
+# - 53/tcp
+# - 67/udp
+# - 68/udp
+# - 69/udp
+# - 80/tcp
+# - 389/tcp
+# - 443/tcp
+# - 639/tcp
+# - 5000/tcp
+# - 5646/tcp
+# - 5647/tcp
+# - 5671/tcp
+# - 5674/tcp
+  - 7911/tcp
+  - 8000/tcp
+# - 8140/tcp
+  - 8443/tcp
+# - 9090/tcp
+# - 16514/tcp
+
+ ##################################
+ ##### REPOSITORY AND PACKAGE #####
+ ##################################
+
+ # Repositories to be enabled on the Satellite server for package installs
+ satellite_repositories:
+   - rhel-7-server-satellite-{{satellite_version}}-rpms
+   - rhel-7-server-rpms
+   - rhel-server-rhscl-7-rpms
+
+# Packages to be installed via YUM. Add another line for any additional
+# software to install.
+packages_list:
+  - satellite
+  - wget
+  - git
+  - net-tools
+  - bash-completion
+  - screen
+  - vim-*
+  - chrony
+
+ # List of repositories to be managed in Satellite
+repositories:
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server (Kickstart)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server - RH Common (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server - Optional (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server - Supplementary (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat OpenStack', name_repo: 'Red Hat OpenStack Platform 8 director for RHEL 7 (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat OpenStack', name_repo: 'Red Hat OpenStack Platform 8 for RHEL 7 (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat OpenStack', name_repo: 'Red Hat OpenStack Platform 8 Operational Tools for RHEL 7 (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Satellite Tools {{ satellite_version }} (for RHEL 7 Server) (RPMs)', architecture: 'x86_64', state: enable}
+  - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server - Extras (RPMs)', architecture: 'x86_64', state: enable}
