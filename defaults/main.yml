@@ -13,11 +13,11 @@ satellite_format_volumes: true
 ########################################
 
 # Registration enabled by default. Change to false if you've already attached a subscription to your machine.
-rhn_user: ''
-rhn_password: ''
+# rhn_user: ''
+# rhn_password: ''
 rhn_product: 'Satellite'
 # Optionally specify the pool id instead of pulling a dynamic pool list
-rhn_pool_id: ''
+# rhn_pool_id: ''
 
 ##########################
 ##### MISC VARIABLES #####
@@ -86,10 +86,10 @@ firewall_ports:
  ##################################
 
  # Repositories to be enabled on the Satellite server for package installs
- satellite_repositories:
-   - rhel-7-server-satellite-{{satellite_version}}-rpms
-   - rhel-7-server-rpms
-   - rhel-server-rhscl-7-rpms
+satellite_repositories:
+  - rhel-7-server-satellite-{{satellite_version}}-rpms
+  - rhel-7-server-rpms
+  - rhel-server-rhscl-7-rpms
 
 # Packages to be installed via YUM. Add another line for any additional
 # software to install.
@@ -116,13 +116,13 @@ repositories:
   - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Satellite Tools {{ satellite_version }} (for RHEL 7 Server) (RPMs)', architecture: 'x86_64', state: enable}
   - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server - Extras (RPMs)', architecture: 'x86_64', state: enable}
 
-  #########################
-  ##### RHSM Settings #####
-  #########################
+#########################
+##### RHSM Settings #####
+#########################
 
-  # /etc/rhsm/rhsm.conf settings
-  rhsub_rhsm_port: 443
-  # rhsub_rhsm_proxy_hostname: ""
-  # rhsub_rhsm_proxy_port: ""
-  # rhsub_rhsm_proxy_user: ""
-  # rhsub_rhsm_proxy_password: ""
+# /etc/rhsm/rhsm.conf settings
+rhsub_rhsm_port: 443
+# rhsub_rhsm_proxy_hostname: ""
+# rhsub_rhsm_proxy_port: ""
+# rhsub_rhsm_proxy_user: ""
+# rhsub_rhsm_proxy_password: ""

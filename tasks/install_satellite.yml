@@ -20,24 +20,24 @@
   tags:
     - install_satellite
 
-- name: Copy satellite answers file to target
-  copy:
-    src: ../templates/satellite-answers.yaml
-    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
-  when: foreman_location.stat.exists
-  tags:
-    - install_satellite
+# - name: Copy satellite answers file to target
+#   copy:
+#     src: ../templates/satellite-answers.yaml
+#     dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
+#   when: foreman_location.stat.exists
+#   tags:
+#     - install_satellite
 
-- name: Update target Satellite answers file
-  replace:
-    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
-    regexp: {{ item.regex }}
-    replace: {{ item.setting }}
-  with_items:
-    - "{{ answer_file_settings }}"
-  when: foreman_location.stat.exists
-  tags:
-    - install_satellite
+# - name: Update target Satellite answers file
+#   replace:
+#     dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
+#     regexp: {{ item.regex }}
+#     replace: {{ item.setting }}
+#   with_items:
+#     - "{{ answer_file_settings }}"
+#   when: foreman_location.stat.exists
+#   tags:
+#     - install_satellite
 
 - name: install_satellite | Install Satellite with desired scenario
   command: /usr/sbin/satellite-installer --scenario "{{ satellite_scenario }}"
