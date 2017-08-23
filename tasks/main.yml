@@ -11,4 +11,3 @@
 - include: install_software.yml
 
 - include: deploy_satellite.yml
-  tags: test
