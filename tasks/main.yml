@@ -2,16 +2,13 @@
 # tasks file for satellite6-install
 - include: registration.yml
   when: rhn_registration
-  tags:
-    - test
+
 - include: format_volumes.yml
   when: satellite_format_volumes
-  tags:
-    - test
+
 - include: firewall.yml
-  tags:
-    - test
+
 - include: install_software.yml
-  tags:
-    - test
-- include: install_satellite.yml
+
+- include: deploy_satellite.yml
+  tags: test

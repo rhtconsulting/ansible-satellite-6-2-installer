@@ -27,20 +27,18 @@
 #   when: foreman_location.stat.exists
 #   tags:
 #     - install_satellite
+- name: SATELLITE | configure satellite | Load Satellite answer file varriables
+  include_vars: file=vars/answer-file.yml
 
-# - name: Update target Satellite answers file
-#   replace:
-#     dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
-#     regexp: {{ item.regex }}
-#     replace: {{ item.setting }}
-#   with_items:
-#     - "{{ answer_file_settings }}"
-#   when: foreman_location.stat.exists
-#   tags:
-#     - install_satellite
+- name: SATELLITE | deploy_satellite | Create satellite answers file
+  template:
+    src: satellite-answers.j2
+    dest: /etc/foreman-installer/scenarios.d/satellite-answers.yaml
+    owner: root
+    group: root
+    mode: 0644
 
-- name: install_satellite | Install Satellite with desired scenario
+- name: SATELLITE | deploy_satellite | Install Satellite with desired scenario
   command: /usr/sbin/satellite-installer --scenario "{{ satellite_scenario }}"
-  when: foreman_location.stat.exists
   tags:
     - install_satellite
