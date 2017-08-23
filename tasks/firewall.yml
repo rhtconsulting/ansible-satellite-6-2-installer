@@ -21,6 +21,8 @@
     state: enabled
   with_items:
     - "{{ firewall_ports }}"
+  tags:
+    - firewalld
 
 - name: SATELLITE | firewall | Enable service in firewall
   firewalld:
@@ -29,3 +31,5 @@
     state: enabled
   with_items:
     - "{{ firewall_services }}"
+  tags:
+    - firewalld
