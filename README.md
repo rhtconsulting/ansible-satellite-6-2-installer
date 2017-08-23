@@ -58,6 +58,3 @@ Josh Springer: <springer@redhat.com>, [GitHub](https://github.com/josh-springer)
 Contributors
 ------------------
 Glenn Snead <glennsnead@gmail.com>, [GitHub](https://github.com/killroy1971)
-
-
-ADDED LINE FOR INTEGRATION TEST
