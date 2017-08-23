@@ -21,6 +21,7 @@
     state: enabled
   with_items:
     - "{{ firewall_ports }}"
+    - "{{ firewall_ports_custom }}"
   tags:
     - firewalld
 
@@ -31,5 +32,6 @@
     state: enabled
   with_items:
     - "{{ firewall_services }}"
+    - "{{ firewall_services_custom }}"
   tags:
     - firewalld
