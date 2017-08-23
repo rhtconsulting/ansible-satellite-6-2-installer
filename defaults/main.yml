@@ -42,7 +42,7 @@ satellite_volumes:
 ##### FIREWALL   #####
 ######################
 
-# List of service to add into the firewall via Firewalld
+# List of services to add into the firewall via Firewalld
 firewall_services:
   - ssh
   - RH-Satellite-6
@@ -80,6 +80,14 @@ firewall_ports:
   - 8443/tcp
   - 9090/tcp
   - 16514/tcp
+
+# Define additional firewall ports to be exposed here
+firewall_ports_custom:
+#  - 1234/tcp
+
+# Define additional firewall services to be exposed here
+firewall_services_custom:
+#  - my-service
 
  ##################################
  ##### REPOSITORY AND PACKAGE #####
