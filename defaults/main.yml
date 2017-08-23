@@ -42,20 +42,6 @@ satellite_volumes:
 ##### FIREWALL   #####
 ######################
 
-# List of services to add into the firewall via Firewalld
-firewall_services:
-  - ssh
-  - RH-Satellite-6
-# - dns
-# - dhcp
-# - dhcpv6
-# - tftp
-# - libvirt-tls
-# - ldap
-# - ldaps
-# - docker-registry
-# - vnc-server
-
 # Define additional custom firewall ports to be exposed here
 firewall_ports_custom:
 #  - 1234/tcp
