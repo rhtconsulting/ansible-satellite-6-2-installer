@@ -9,16 +9,16 @@
 #  tags:
 #  - install_satellite
 
-- name: Load Satellite answer file varriables
-  include_vars:
-    file: ../vars/answer-file.yml
-
-- name: install_satellite | Verify Foreman exists
-  stat:
-    path: /etc/init.d/foreman
-  register: foreman_location
-  tags:
-    - install_satellite
+# - name: Load Satellite answer file varriables
+#   include_vars:
+#     file: ../vars/answer-file.yml
+#
+# - name: install_satellite | Verify Foreman exists
+#   stat:
+#     path: /etc/init.d/foreman
+#   register: foreman_location
+#   tags:
+#     - install_satellite
 
 # - name: Copy satellite answers file to target
 #   copy:

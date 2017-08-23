@@ -1,6 +1,7 @@
 ---
 - name: SATELLITE | install_software | Clear out existing repos
   command: subscription-manager repos --disable "*"
+  changed_when: false
 
 - name: SATELLITE | install_software | Configure repository subscriptions
   redhat_repos:
@@ -9,6 +10,7 @@
 
 - name: SATELLITE | registration | Clean out any residual metadata from old repositories
   command: yum clean all
+  changed_when: false
 
 - name: SATELLITE | install_software | Update currently installed  packages
   yum:
