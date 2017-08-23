@@ -14,16 +14,6 @@
   tags:
     - firewalld
 
-- name: SATELLITE | firewall | Set hostname
-  command: hostnamectl set-hostname {{ hostname_full }}
-
-- name: SATELLITE | firewall | Add hostname to /etc/hosts
-  lineinfile:
-    dest: /etc/hosts
-    line: "{{ ip_address_sat }} {{ hostname_full }} {{ hostname_short }}"
-  tags:
-    - hostname
-
 - name: SATELLITE | firewall | Enable ports in firewall
   firewalld:
     port: "{{ item }}"

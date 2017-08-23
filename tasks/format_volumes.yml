@@ -1,10 +1,10 @@
-- name: SATELLITE | provision satellite | Create Satellite vg_data lvm volume group
+- name: SATELLITE | format_volumes | Create Satellite vg_data lvm volume group
   lvg:
     vg: "{{ satellite_volgrp }}"
     pvs: "{{ satellite_data_physvol }}"
     force: no
 
-- name: SATELLITE | provision satellite | Create Satellite lvm logical volumes
+- name: SATELLITE | format_volumes | Create Satellite lvm logical volumes
   lvol:
     lv: "{{ item.lvname }}"
     vg: "{{ satellite_volgrp }}"
@@ -12,13 +12,13 @@
     state: present
   with_items: "{{ satellite_volumes }}"
 
-- name: SATELLITE | provision satellite | Format Satellite logical volumes
+- name: SATELLITE | format_volumes | Format Satellite logical volumes
   filesystem:
     fstype: xfs
     dev: /dev/{{ satellite_volgrp }}/{{ item.lvname }}
   with_items: "{{ satellite_volumes }}"
 
-- name: SATELLITE | provision satellite | Add Satelite data volumes to fstab
+- name: SATELLITE | format_volumes | Add Satelite data volumes to fstab
   mount:
     name: "{{ item.mtpoint }}"
     src: "{{ item.lvpath }}"

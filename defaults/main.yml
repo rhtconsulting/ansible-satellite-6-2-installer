@@ -28,15 +28,15 @@ satellite_version: 6.2
 # Default Satellite Scenario
 satellite_scenario: satellite
 # Volume formatting assumes one data partition assigned. Those values can be adjusted below.
-satellite_data_physvol: /dev/xvdc
-satellite_data_physlvm: /dev/xvdc1
+satellite_data_physvol: /dev/sdb
+satellite_data_physlvm: /dev/sdb1
 satellite_volgrp: vg_data
 satellite_volumes:
-  - { lvname: "lv_mongodb", lvsize: "60G", mtpoint: "/var/lib/mongodb", lvpath: "/dev/mapper/vg_data-lv_mongodb" }
-  - { lvname: "lv_pulp", lvsize: "600G", mtpoint: "/var/lib/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp" }
+  - { lvname: "lv_mongodb", lvsize: "10G", mtpoint: "/var/lib/mongodb", lvpath: "/dev/mapper/vg_data-lv_mongodb" }
+  - { lvname: "lv_pulp", lvsize: "68G", mtpoint: "/var/lib/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp" }
   - { lvname: "lv_pulp_cache", lvsize: "10G", mtpoint: "/var/cache/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp_cache" }
-  - { lvname: "lv_qpidd", lvsize: "4G", mtpoint: "/var/lib/qpidd", lvpath: "/dev/mapper/vg_data-lv_qpidd" }
-  - { lvname: "lv_pgsql", lvsize: "20G", mtpoint: "/var/lib/pgsql", lvpath: "/dev/mapper/vg_data-lv_pgsql" }
+  - { lvname: "lv_qpidd", lvsize: "2G", mtpoint: "/var/lib/qpidd", lvpath: "/dev/mapper/vg_data-lv_qpidd" }
+  - { lvname: "lv_pgsql", lvsize: "8G", mtpoint: "/var/lib/pgsql", lvpath: "/dev/mapper/vg_data-lv_pgsql" }
 
 ######################
 ##### FIREWALL   #####
