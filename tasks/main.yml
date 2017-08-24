@@ -7,7 +7,13 @@
   when: satellite_format_volumes
 
 - include: firewall.yml
+  when: satellite_configure_firewall
 
 - include: install_software.yml
+  when: satellite_install_prereqs
 
 - include: deploy_satellite.yml
+  when: satellite_deploy_satellite
+
+- include: upload_manifest.yml
+  when: satellite_upload_manifest

@@ -1,0 +1,17 @@
+---
+- name: SATELLITE | upload_manifest | Foreman is running
+  shell: 'systemctl is-active foreman-tasks.service'
+  register: foreman_status
+
+- name: SATELLITE | upload_manifest | Copy mainfiest file to Satellite server
+  copy:
+    src: {{ manifest_filename }}
+    dest: /root/{{ manifest_filename }}
+    mode: 0644
+    owner: root
+    group: root
+  when: foreman_status.stdout == "active"
+
+- name: SATELLITE | upload_manifest | Upload manifest to Satellite server
+  command: hammer --password {{ sat_password }} subscription upload --organization {{ satellite_organization | default('Default Organization') }} --file /root/{{ satellite_manifest_filename | default('satellite_manifest.zip')  }}
+  when: foreman_status.stdout == "active"

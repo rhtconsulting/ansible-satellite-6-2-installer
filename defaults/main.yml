@@ -5,8 +5,12 @@
 ##### PLAYBOOK TOGGLES #####
 ############################
 rhn_registration: true
+satellite_configure_firewall: true
+satellite_install_prereqs: true
 rhsub_rhsm_configure: true
 satellite_format_volumes: true
+satellite_deploy_satellite: true
+satellite_upload_manifest: true
 
 ########################################
 ##### RED HAT NETWORK REGISTRATION #####
@@ -16,6 +20,11 @@ satellite_format_volumes: true
 # rhn_user: ''
 # rhn_password: ''
 rhn_product: 'Satellite'
+
+## Password used to authentiate as the default admin (foreman, admin, etc)
+## It is highly encouraged that this value is set in Vault.
+# sat_password:
+
 # Optionally specify the pool id instead of pulling a dynamic pool list
 # rhn_pool_id: ''
 
@@ -23,17 +32,18 @@ rhn_product: 'Satellite'
 ##### MISC VARIABLES #####
 ##########################
 
-# Desired Satellite version
 satellite_version: 6.2
-# Default Satellite Scenario
-satellite_scenario: satellite
-# Volume formatting assumes one data partition assigned. Those values can be adjusted below.
+satellite_scenario: satellite #Satellite scenario to use
+# satellite_organization: #Organization to run playbooks against, defaults to Default Org if none is defined
+satellite_manifest_filename: satellite_manifest.zip
+
+## Volume formatting assumes one data partition assigned. Those values can be adjusted below.
 satellite_data_physvol: /dev/sdb
 satellite_data_physlvm: /dev/sdb1
 satellite_volgrp: vg_data
 satellite_volumes:
   - { lvname: "lv_mongodb", lvsize: "10G", mtpoint: "/var/lib/mongodb", lvpath: "/dev/mapper/vg_data-lv_mongodb" }
-  - { lvname: "lv_pulp", lvsize: "68G", mtpoint: "/var/lib/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp" }
+  - { lvname: "lv_pulp", lvsize: "50G", mtpoint: "/var/lib/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp" }
   - { lvname: "lv_pulp_cache", lvsize: "10G", mtpoint: "/var/cache/pulp", lvpath: "/dev/mapper/vg_data-lv_pulp_cache" }
   - { lvname: "lv_qpidd", lvsize: "2G", mtpoint: "/var/lib/qpidd", lvpath: "/dev/mapper/vg_data-lv_qpidd" }
   - { lvname: "lv_pgsql", lvsize: "8G", mtpoint: "/var/lib/pgsql", lvpath: "/dev/mapper/vg_data-lv_pgsql" }
@@ -42,26 +52,26 @@ satellite_volumes:
 ##### FIREWALL   #####
 ######################
 
-# Define additional custom firewall ports to be exposed here
+## Define additional custom firewall ports to be exposed here
 firewall_ports_custom:
 #  - 1234/tcp
 
-# Define additional custom firewall services to be exposed here
+## Define additional custom firewall services to be exposed here
 firewall_services_custom:
 #  - my-service
 
- ##################################
- ##### REPOSITORY AND PACKAGE #####
- ##################################
+ #####################################
+ ##### REPOSITORIES AND PACKAGES #####
+ #####################################
 
- # Repositories to be enabled on the Satellite server for package installs
+## Repositories to be enabled on the Satellite server for package installs
 satellite_repositories:
-  - rhel-7-server-satellite-{{satellite_version}}-rpms
+  - rhel-7-server-satellite-{{ satellite_version }}-rpms
   - rhel-7-server-rpms
   - rhel-server-rhscl-7-rpms
 
-# Packages to be installed via YUM. Add another line for any additional
-# software to install.
+## Packages to be installed via YUM. Add another line for any additional
+## software to install.
 packages_list:
   - satellite
   - wget
@@ -72,7 +82,7 @@ packages_list:
   - vim-*
   - chrony
 
- # List of repositories to be managed in Satellite
+## List of repositories to be managed in Satellite
 repositories:
   - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server (Kickstart)', rel: '7Server', architecture: 'x86_64', state: enable}
   - { product_name: 'Red Hat Enterprise Linux Server', name_repo: 'Red Hat Enterprise Linux 7 Server (RPMs)', rel: '7Server', architecture: 'x86_64', state: enable}
