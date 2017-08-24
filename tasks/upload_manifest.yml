@@ -5,8 +5,8 @@
 
 - name: SATELLITE | upload_manifest | Copy mainfiest file to Satellite server
   copy:
-    src: {{ manifest_filename }}
-    dest: /root/{{ manifest_filename }}
+    src: {{ satellite_manifest_filename }}
+    dest: /root/{{ satellite_manifest_filename }}
     mode: 0644
     owner: root
     group: root
